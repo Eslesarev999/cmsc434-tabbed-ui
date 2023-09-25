@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.*;
 
 public class health_app {
     public static void main(String[] args) {
@@ -10,7 +12,7 @@ public class health_app {
         JTabbedPane tp=new JTabbedPane(); 
 
         // Sets the size of each tab or JPanel
-        tp.setBounds(0,0,375,667);  
+        tp.setBounds(0,0,375,640);  
 
         // Adds the tabs to the gui window
         tp.add(new JScrollPane(Tab1()), "Text");
@@ -20,7 +22,7 @@ public class health_app {
         tp.add(Tab5(), "Colors");
         tp.add(Tab6(), "Lower Right");
 
-        // Formatting of the gui window "frame"
+        // Formatting of the gui window "frame" to be size of traditional mobile phone
         frame.add(tp);  
         frame.setSize(375, 667);  
         frame.setLayout(null);  
@@ -87,14 +89,61 @@ public class health_app {
     public static Component Tab2() {
         JPanel tab2 = new JPanel();  
         JTextArea radiotext = new JTextArea(1,15);
+        JTextArea menutext = new JTextArea(1,15);
+        JTextArea buttontext = new JTextArea(1,15);
         JRadioButton radioButton1= new JRadioButton("Happy");
         JRadioButton radioButton2= new JRadioButton("Sad");
-
+        // Create a panel to contain the buttons in falling order
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        
+        // Part 1) Radio Buttons
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         radiotext.setText("Are you happy or sad?");
+        buttonPanel.add(radiotext, BorderLayout.NORTH);
 
-        tab2.add(radiotext);
-        tab2.add(radioButton1);
-        tab2.add(radioButton2);
+        // Group the radio buttons.
+        ButtonGroup group = new ButtonGroup();
+        group.add(radioButton1);
+        group.add(radioButton2);
+
+        buttonPanel.add(radioButton1);
+        buttonPanel.add(radioButton2);
+
+        // newlines
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 50))); 
+
+        // Part 2) A drop-down list entry option
+        menutext.setText("Are you happy or sad?");
+        buttonPanel.add(menutext, BorderLayout.NORTH);
+        String[] combos = { "Happy", "Sad", "Neither" };
+        JComboBox<String> choices = new JComboBox<>(combos);
+        choices.setSelectedIndex(0);
+        buttonPanel.add(choices);
+
+        // newlines
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 50))); 
+
+        // Part 3) A traditional button that when pressed will display text that is somehow reflecting the options chosen
+        buttontext.setText("Choose a button reflecting your current mood:");
+        buttonPanel.add(buttontext, BorderLayout.NORTH);
+        JButton happybutton = new JButton("Happy");
+        JButton sadbutton = new JButton("Sad");
+        happybutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(tab2, "Glad you are happy!", "Notification", JOptionPane.CANCEL_OPTION);
+            }
+        });
+        sadbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(tab2, "Aww, cheer up!", "Notification", JOptionPane.CANCEL_OPTION);
+            }
+        });
+        
+        buttonPanel.add(happybutton);
+        buttonPanel.add(sadbutton);
+
+        tab2.add(buttonPanel);
 
         return tab2;
     }
@@ -104,15 +153,92 @@ public class health_app {
         return tab3;
     }
     public static Component Tab4() {
-        JPanel tab4=new JPanel();  
-        // content of tab
+        JPanel tab4 = new JPanel();
+        tab4.setLayout(new GridBagLayout()); 
+        
+        // Scaling the button image to be smaller
+        ImageIcon icon = new ImageIcon("SmileyFace.png");
+        Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); 
+        ImageIcon scaledIcon = new ImageIcon(image);
+        JButton imageButton = new JButton(scaledIcon);
+    
+        // Show a notification when the button is pressed
+        imageButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(tab4, "Hi there!", "Notification", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+    
+        // Creating a label for the text that will go under the button
+        JLabel textLabel = new JLabel("Smiley J. Smile");
+        textLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        // Create a panel to contain the image and text
+        JPanel imagePanel = new JPanel(new BorderLayout());
+    
+        // Center the image in the panel
+        imagePanel.add(imageButton, BorderLayout.CENTER);
+        
+        // Center the text underneath the image
+        imagePanel.add(textLabel, BorderLayout.SOUTH);
+    
+        // Add the image panel to the tab4 panel
+        tab4.add(imagePanel, new GridBagConstraints());
+    
         return tab4;
     }
+    
     public static Component Tab5() {
-        JPanel tab5=new JPanel();  
-        // content of tab
+        JPanel tab5 = new JPanel();
+        Color lighterPink = new Color(255, 200, 220);
+        tab5.setBackground(lighterPink);
+        FlowLayout layout = new FlowLayout(FlowLayout.LEADING, 0, 0);
+        tab5.setLayout(layout);
+        
+        JLabel colorsLabel = new JLabel("Colors");
+        
+        int top = 20;
+        int left = 0;
+        int bottom = 20;
+        int right = 0;
+        colorsLabel.setBorder(new EmptyBorder(top, left, bottom, right));
+        
+        Font customFont = new Font("Times New Roman", Font.PLAIN | Font.BOLD, 25);
+        colorsLabel.setFont(customFont);
+        colorsLabel.setForeground(Color.BLACK);
+        
+        JPanel blackStripPanel = new JPanel();
+        blackStripPanel.setBackground(Color.BLACK);
+        blackStripPanel.setPreferredSize(new Dimension(390, 25));
+        blackStripPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+        JLabel helloLabel = new JLabel("Hello There");
+        helloLabel.setForeground(Color.YELLOW);
+        Font customFont2 = new Font("Times New Roman", Font.PLAIN | Font.BOLD, 20);
+        helloLabel.setFont(customFont2);
+
+        blackStripPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 2));
+        blackStripPanel.add(helloLabel);
+
+        JPanel yellowStripPanel = new JPanel();
+        yellowStripPanel.setBackground(Color.YELLOW);
+        yellowStripPanel.setPreferredSize(new Dimension(390, 26));
+        yellowStripPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+        JLabel hiAgainLabel = new JLabel("Hi Again");
+        Color customPurple = new Color(128, 0, 128);
+        hiAgainLabel.setForeground(customPurple);
+        hiAgainLabel.setFont(customFont2);
+
+        yellowStripPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 1));
+        yellowStripPanel.add(hiAgainLabel);
+
+        tab5.add(colorsLabel);
+        tab5.add(blackStripPanel);
+        tab5.add(yellowStripPanel);
         return tab5;
     }
+    
     public static Component Tab6() {
         JPanel tab6=new JPanel();  
         // content of tab
