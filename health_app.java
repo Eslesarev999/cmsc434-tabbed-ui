@@ -149,7 +149,7 @@ public class health_app {
 
         return tab2;
     }
-    
+
     public static Component Tab3() {
         JPanel tab3 = new JPanel();  
         
@@ -353,7 +353,6 @@ public class health_app {
     
         return tab6;
     }
-   
     
 }
 
