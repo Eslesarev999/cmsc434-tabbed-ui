@@ -219,7 +219,7 @@ public class health_app {
             }
         });
     
-        //New panel for header & "Add Task" components 
+        //New panel for header & "Add Task" components
         JPanel addTaskPanel = new JPanel();
         addTaskPanel.setLayout(new BorderLayout());
 
