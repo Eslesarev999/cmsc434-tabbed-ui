@@ -162,7 +162,7 @@ public class health_app {
         //Text field for adding new tasks
         JTextField newTaskField = new JTextField(20);
         
-        // Button to add tasks
+        //Button to add tasks
         JButton addButton = new JButton("Add Task");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
