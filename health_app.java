@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class health_app {
     public static void main(String[] args) {
@@ -147,11 +149,96 @@ public class health_app {
 
         return tab2;
     }
+    
     public static Component Tab3() {
-        JPanel tab3=new JPanel();  
-        // content of tab
+        JPanel tab3 = new JPanel();  
+        
+        // Create the "To Do" panel
+        JPanel toDoPanel = new JPanel();
+        toDoPanel.setLayout(new BoxLayout(toDoPanel, BoxLayout.Y_AXIS));
+
+        List<JPanel> taskPanels = new ArrayList<>();
+    
+        //Text field for adding new tasks
+        JTextField newTaskField = new JTextField(20);
+        
+        // Button to add tasks
+        JButton addButton = new JButton("Add Task");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String newTask = newTaskField.getText();
+                if (!newTask.isEmpty()) {
+                    
+                    JPanel inputTask = new JPanel();
+                    inputTask.setLayout(new BorderLayout());
+
+                    JLabel taskLabel1 = new JLabel(newTask);
+
+                    //Delete individal tasks
+                    ImageIcon deleteIcon = new ImageIcon("delete_icon.png");
+                    JButton delete = new JButton(deleteIcon);
+                    delete.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            toDoPanel.remove(inputTask);
+                            taskPanels.remove(inputTask);
+                            toDoPanel.revalidate();
+                            toDoPanel.repaint();
+                        }
+                    });
+
+                    //Get preferred size of the text label
+                    Dimension labelSize = taskLabel1.getPreferredSize();
+
+                    //Set size of icon to fit text label
+                    delete.setIcon(new ImageIcon(deleteIcon.getImage().getScaledInstance(labelSize.height, labelSize.height, Image.SCALE_SMOOTH)));
+
+                    //Cross out individal tasks using checkbox
+                    JCheckBox crossOut = new JCheckBox();
+                    crossOut.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                           if (crossOut.isSelected()) {
+                                taskLabel1.setText("<html><strike>" + newTask + "</strike></html>");
+                           } else {
+                            taskLabel1.setText(newTask);
+                           }
+                        }
+                    });
+
+                    //Task text & buttons layout
+                    inputTask.add(taskLabel1, BorderLayout.CENTER);
+                    inputTask.add(delete, BorderLayout.EAST);
+                    inputTask.add(crossOut, BorderLayout.WEST);
+
+                    //Adding task to screen
+                    taskPanels.add(inputTask);
+                    toDoPanel.add(inputTask);
+                    newTaskField.setText("");
+                    toDoPanel.revalidate();
+                    toDoPanel.repaint();
+                }
+            }
+        });
+    
+        //New panel for header & "Add Task" components 
+        JPanel addTaskPanel = new JPanel();
+        addTaskPanel.setLayout(new BorderLayout());
+
+        //Header for the tab
+        JLabel tabHeader = new JLabel("TO DO");
+        tabHeader.setFont(new Font("Arial", Font.BOLD, 24));
+        tabHeader.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        addTaskPanel.add(tabHeader, BorderLayout.NORTH);
+        addTaskPanel.add(newTaskField, BorderLayout.CENTER);
+        addTaskPanel.add(addButton, BorderLayout.EAST);
+
+        tab3.add(addTaskPanel, BorderLayout.NORTH);
+        tab3.add(new JScrollPane(toDoPanel), BorderLayout.CENTER);
+        tab3.add("To Do", toDoPanel);
+        
         return tab3;
     }
+    
     public static Component Tab4() {
         JPanel tab4 = new JPanel();
         tab4.setLayout(new GridBagLayout()); 
