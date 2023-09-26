@@ -149,7 +149,50 @@ public class health_app {
     }
     public static Component Tab3() {
         JPanel tab3=new JPanel();  
-        // content of tab
+        // Create the "To Do" panel
+        JPanel toDoPanel = new JPanel();
+        toDoPanel.setLayout(new BorderLayout());
+
+        // buttons for deleting and crossing out tasks
+        JButton delete = new JButton("Delete Task");
+        JButton crossout = new JButton("Cross Out Task");
+
+        // Create a JTextArea for the task list
+        JTextArea taskList = new JTextArea();
+    
+        // Create a text field for adding new tasks
+        JTextField newTaskField = new JTextField(20);
+        
+        // Button to add tasks
+        JButton addButton = new JButton("Add Task");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String newTask = newTaskField.getText();
+                if (!newTask.isEmpty()) {
+                    taskList.append("- " + newTask + "\n");
+                    newTaskField.setText(""); 
+                }
+            }
+        });
+
+        // button to delete tasks
+        // delete.addActionListener(new ActionListener() {
+        //     public void actionPerformed(ActionEvent e) {
+        //         String newTask = newTaskField.getText();
+        //         if (!newTask.isEmpty()) {
+        //             newTaskField.setText(""); 
+        //         }
+        //     }
+        // });
+    
+        toDoPanel.add(newTaskField, BorderLayout.NORTH);
+        toDoPanel.add(addButton, BorderLayout.SOUTH);
+        taskList.setEditable(false); // Making it read-only
+        toDoPanel.add(taskList);
+
+        
+        tab3.add("To Do", toDoPanel);
+
         return tab3;
     }
     public static Component Tab4() {
@@ -241,28 +284,10 @@ public class health_app {
     
     public static Component Tab6() {
         JPanel tab6 = new JPanel(new BorderLayout());
-    
-        Box box = Box.createVerticalBox();
+        JLabel lowerRightLabel = new JLabel("Down here!");
 
-        //Creates a label to display the text
-        //the <br> tags are nextline characters that put the label at the bottom
-        JLabel label = new JLabel("<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><br><br><br><br><br><html>"+
-             "<html>Down Here");
-
-        //sets the label to the right of the page
-        label.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        label.setVerticalAlignment(SwingConstants.BOTTOM);
-    
-        //add the label to the box
-        box.add(label);
-    
-        //at the box with the label to the tab
-        tab6.add(box, BorderLayout.CENTER);
+        lowerRightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        tab6.add(lowerRightLabel, BorderLayout.PAGE_END);
     
         return tab6;
     }
