@@ -328,28 +328,10 @@ public class health_app {
     
     public static Component Tab6() {
         JPanel tab6 = new JPanel(new BorderLayout());
-    
-        Box box = Box.createVerticalBox();
+        JLabel lowerRightLabel = new JLabel("Down here!");
 
-        //Creates a label to display the text
-        //the <br> tags are nextline characters that put the label at the bottom
-        JLabel label = new JLabel("<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><html>"+
-            "<html> <br><br><br><br><br><br><br><br><br><br><br><br><html>"+
-             "<html>Down Here");
-
-        //sets the label to the right of the page
-        label.setHorizontalAlignment(SwingConstants.RIGHT);
-
-        label.setVerticalAlignment(SwingConstants.BOTTOM);
-    
-        //add the label to the box
-        box.add(label);
-    
-        //at the box with the label to the tab
-        tab6.add(box, BorderLayout.CENTER);
+        lowerRightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        tab6.add(lowerRightLabel, BorderLayout.PAGE_END);
     
         return tab6;
     }
